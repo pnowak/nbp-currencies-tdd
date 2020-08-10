@@ -1,0 +1,26 @@
+{
+  "name": "nbp-currencies-tdd",
+  "version": "1.0.0",
+  "description": "NBP Currencies App",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnowak/nbp-currencies-tdd.git"
+  },
+  "keywords": [
+    "tdd",
+    "react"
+  ],
+  "author": "pnowak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pnowak/nbp-currencies-tdd/issues"
+  },
+  "homepage": "https://github.com/pnowak/nbp-currencies-tdd#readme",
+  "devDependencies": {
+    "jest": "^26.2.2"
+  }
+}
