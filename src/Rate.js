@@ -6,10 +6,14 @@ export const Rate = ({ rate }) => (
 
 export const CurrencyList = ({currencies}) => (
     <div id="currencyList">
-        <ol>
-            {currencies.map((currency) => (
-                <li key={currency.code}>{currency.currency}</li>
-            ))}
-        </ol>
+        {currencies.length === 0 ? (
+            <p>There are no currencies yet.</p>
+        ) : (
+            <ol>
+                {currencies.map((currency) => (
+                    <li key={currency.code}>{currency.currency}</li>
+                ))}
+            </ol>
+        )}
     </div>
 );

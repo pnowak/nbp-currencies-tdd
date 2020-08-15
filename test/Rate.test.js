@@ -42,6 +42,12 @@ describe('CurrencyList', () => {
         expect(container.querySelector('div#currencyList')).not.toBeNull();
     });
 
+    it('initially shows a message saying there are no currencies yet', () => {
+        render(<CurrencyList currencies={[]} />, container);
+
+        expect(container.textContent).toMatch('There are no currencies yet');
+    });
+
     it('renders multiple currencies in an ol element', () => {
         const currencies = [
             { currency: 'dolar amerykański', code: 'USD' },
