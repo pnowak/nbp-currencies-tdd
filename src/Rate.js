@@ -8,7 +8,7 @@ export const CurrencyList = ({currencies}) => (
     <div id="currencyList">
         <ol>
             {currencies.map((currency) => (
-                <li key={currency.code}></li>
+                <li key={currency.code}>{currency.currency}</li>
             ))}
         </ol>
     </div>

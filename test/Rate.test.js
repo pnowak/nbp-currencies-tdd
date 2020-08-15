@@ -52,4 +52,16 @@ describe('CurrencyList', () => {
         expect(container.querySelector('ol')).not.toBeNull();
         expect(container.querySelector('ol').children).toHaveLength(2);
     });
+
+    it('renders each currency in an li', () => {
+        const currencies = [
+            { currency: 'dolar amerykański', code: 'USD' },
+            { currency: 'euro', code: 'EUR' }
+        ];
+
+        render(<CurrencyList currencies={currencies} />, container);
+        expect(container.querySelectorAll('li')).toHaveLength(2);
+        expect(container.querySelectorAll('li')[0].textContent).toEqual('dolar amerykański');
+        expect(container.querySelectorAll('li')[1].textContent).toEqual('euro');
+    });
 });
