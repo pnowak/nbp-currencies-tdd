@@ -41,4 +41,15 @@ describe('CurrencyList', () => {
 
         expect(container.querySelector('div#currencyList')).not.toBeNull();
     });
+
+    it('renders multiple currencies in an ol element', () => {
+        const currencies = [
+            { currency: 'dolar amerykański', code: 'USD' },
+            { currency: 'euro', code: 'EUR' }
+        ];
+        
+        render(<CurrencyList currencies={currencies} />, container);
+        expect(container.querySelector('ol')).not.toBeNull();
+        expect(container.querySelector('ol').children).toHaveLength(2);
+    });
 });

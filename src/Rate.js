@@ -4,4 +4,12 @@ export const Rate = ({ rate }) => (
     <div>{rate.currency}</div>
 );
 
-export const CurrencyList = () => <div id="currencyList"></div>;
+export const CurrencyList = ({currencies}) => (
+    <div id="currencyList">
+        <ol>
+            {currencies.map((currency) => (
+                <li key={currency.code}></li>
+            ))}
+        </ol>
+    </div>
+);
