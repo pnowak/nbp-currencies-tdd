@@ -11,6 +11,7 @@ describe('Rate', () => {
     });
 
     const render = (component) => ReactDOM.render(component, container);
+    const element = selector => container.querySelector(selector);
 
     it('renders the currency rate', () => {
         rate = { currency: 'dolar amerykański' };
@@ -71,5 +72,10 @@ describe('CurrencyList', () => {
         render(<CurrencyList currencies={currencies} />, container);
         expect(elements('li > button')).toHaveLength(2);
         expect(elements('li > button')[0].type).toEqual('button');
+    });
+
+    it('renders a button with value "Add"', () => {
+        render(<CurrencyList currencies={currencies} buttonValue={'Add'} />, container);
+        expect(elements('li > button')[0].textContent).toMatch('Add');
     });
 });
