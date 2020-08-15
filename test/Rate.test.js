@@ -28,6 +28,10 @@ describe('Rate', () => {
 });
 
 describe('CurrencyList', () => {
+    const currencies = [
+        { currency: 'dolar amerykański', code: 'USD' },
+        { currency: 'euro', code: 'EUR' }
+    ];
     let container;
 
     beforeEach(() => {
@@ -35,11 +39,13 @@ describe('CurrencyList', () => {
     });
 
     const render = (component) => ReactDOM.render(component, container);
+    const element = selector => container.querySelector(selector);
+    const elements = selector => container.querySelectorAll(selector);
 
     it('renders a div with the right id', () => {
         render(<CurrencyList currencies={[]} />, container);
 
-        expect(container.querySelector('div#currencyList')).not.toBeNull();
+        expect(element('div#currencyList')).not.toBeNull();
     });
 
     it('initially shows a message saying there are no currencies yet', () => {
@@ -49,36 +55,21 @@ describe('CurrencyList', () => {
     });
 
     it('renders multiple currencies in an ol element', () => {
-        const currencies = [
-            { currency: 'dolar amerykański', code: 'USD' },
-            { currency: 'euro', code: 'EUR' }
-        ];
-        
         render(<CurrencyList currencies={currencies} />, container);
-        expect(container.querySelector('ol')).not.toBeNull();
-        expect(container.querySelector('ol').children).toHaveLength(2);
+        expect(element('ol')).not.toBeNull();
+        expect(element('ol').children).toHaveLength(2);
     });
 
     it('renders each currency in an li', () => {
-        const currencies = [
-            { currency: 'dolar amerykański', code: 'USD' },
-            { currency: 'euro', code: 'EUR' }
-        ];
-
         render(<CurrencyList currencies={currencies} />, container);
-        expect(container.querySelectorAll('li')).toHaveLength(2);
-        expect(container.querySelectorAll('li')[0].textContent).toEqual('dolar amerykański');
-        expect(container.querySelectorAll('li')[1].textContent).toEqual('euro');
+        expect(elements('li')).toHaveLength(2);
+        expect(elements('li')[0].textContent).toEqual('dolar amerykański');
+        expect(elements('li')[1].textContent).toEqual('euro');
     });
 
     it('has a button element in each li', () => {
-        const currencies = [
-            { currency: 'dolar amerykański', code: 'USD' },
-            { currency: 'euro', code: 'EUR' }
-        ];
-
         render(<CurrencyList currencies={currencies} />, container);
-        expect(container.querySelectorAll('li > button')).toHaveLength(2);
-        expect(container.querySelectorAll('li > button')[0].type).toEqual('button');
+        expect(elements('li > button')).toHaveLength(2);
+        expect(elements('li > button')[0].type).toEqual('button');
     });
 });
