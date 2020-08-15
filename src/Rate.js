@@ -1,19 +1,24 @@
 import React from 'react';
 
 export const Rate = ({ rate }) => (
-    <div>{rate.currency}</div>
+    <>
+        <span>{rate.currency}</span>
+        <button type="button"></button>
+    </>
 );
 
-export const CurrencyList = ({currencies}) => (
-    <div id="currencyList">
-        {currencies.length === 0 ? (
-            <p>There are no currencies yet.</p>
-        ) : (
-            <ol>
-                {currencies.map((currency) => (
-                    <li key={currency.code}>{currency.currency}</li>
-                ))}
-            </ol>
-        )}
-    </div>
-);
+export const CurrencyList = ({currencies}) => {
+    return (
+        <div id="currencyList">
+            {currencies.length === 0 ? (
+                <p>There are no currencies yet.</p>
+            ) : (
+                    <ol>
+                        {currencies.map((currency) => (
+                            <li key={currency.code}><Rate rate={currency} /></li>
+                        ))}
+                    </ol>
+                )}
+        </div>
+    )
+};

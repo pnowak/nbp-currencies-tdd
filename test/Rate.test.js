@@ -70,4 +70,15 @@ describe('CurrencyList', () => {
         expect(container.querySelectorAll('li')[0].textContent).toEqual('dolar amerykański');
         expect(container.querySelectorAll('li')[1].textContent).toEqual('euro');
     });
+
+    it('has a button element in each li', () => {
+        const currencies = [
+            { currency: 'dolar amerykański', code: 'USD' },
+            { currency: 'euro', code: 'EUR' }
+        ];
+
+        render(<CurrencyList currencies={currencies} />, container);
+        expect(container.querySelectorAll('li > button')).toHaveLength(2);
+        expect(container.querySelectorAll('li > button')[0].type).toEqual('button');
+    });
 });
