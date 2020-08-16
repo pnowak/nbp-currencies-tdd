@@ -94,4 +94,10 @@ describe('FavouriteList', () => {
 
         expect(element('div#favouriteList')).not.toBeNull();
     });
+
+    it('initially nothing to show', () => {
+        render(<CurrencyList currencies={[]} />, container);
+
+        expect(container.textContent).toMatch('There are no currencies yet');
+    });
 });
