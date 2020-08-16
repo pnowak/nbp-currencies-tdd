@@ -22,3 +22,5 @@ export const CurrencyList = ({currencies, buttonValue}) => {
         </div>
     )
 };
+
+export const FavouriteList = () => <div id="favouriteList"></div>

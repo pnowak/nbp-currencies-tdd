@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM, { render } from 'react-dom';
-import { Rate, CurrencyList } from '../src/Rate';
+import ReactDOM from 'react-dom';
+import { Rate, CurrencyList, FavouriteList } from '../src/Rate';
 
 describe('Rate', () => {
     let container;
@@ -11,7 +11,6 @@ describe('Rate', () => {
     });
 
     const render = (component) => ReactDOM.render(component, container);
-    const element = selector => container.querySelector(selector);
 
     it('renders the currency rate', () => {
         rate = { currency: 'dolar amerykański' };
@@ -77,5 +76,22 @@ describe('CurrencyList', () => {
     it('renders a button with value "Add"', () => {
         render(<CurrencyList currencies={currencies} buttonValue={'Add'} />, container);
         expect(elements('li > button')[0].textContent).toMatch('Add');
+    });
+});
+
+describe('FavouriteList', () => {
+    let container;
+
+    beforeEach(() => {
+        container = document.createElement('div');
+    });
+
+    const render = (component) => ReactDOM.render(component, container);
+    const element = selector => container.querySelector(selector);
+
+    it('renders a div with the right id', () => {
+        render(<FavouriteList currencies={[]} />, container);
+
+        expect(element('div#favouriteList')).not.toBeNull();
     });
 });
