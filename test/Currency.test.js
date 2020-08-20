@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Rate, CurrencyList, FavouriteList } from '../src/Rate';
+import { Currency, CurrencyList, FavouriteList } from '../src/Currency';
 
-describe('Rate', () => {
+describe('Currency', () => {
     let container;
     let rate;
 
@@ -15,14 +15,14 @@ describe('Rate', () => {
     it('renders the currency rate', () => {
         rate = { currency: 'dolar amerykański' };
 
-        render(<Rate rate={rate} />, container);
+        render(<Currency rate={rate} />, container);
         expect(container.textContent).toMatch('dolar amerykański');
     });
 
     it('renders another the currency value', () => {
         rate = { currency: 'euro' };
 
-        render(<Rate rate={rate} />, container);
+        render(<Currency rate={rate} />, container);
         expect(container.textContent).toMatch('euro');
     });
 });

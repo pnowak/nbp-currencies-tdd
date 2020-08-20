@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Rate = ({ rate, buttonValue }) => (
+export const Currency = ({ rate, buttonValue }) => (
     <>
         <span>{rate.currency}</span>
         <button type="button">{buttonValue}</button>
@@ -15,7 +15,7 @@ export const CurrencyList = ({currencies, buttonValue}) => {
             ) : (
                     <ol>
                         {currencies.map((currency) => (
-                            <li key={currency.code}><Rate rate={currency} buttonValue={buttonValue} /></li>
+                            <li key={currency.code}><Currency rate={currency} buttonValue={buttonValue} /></li>
                         ))}
                     </ol>
                 )}
