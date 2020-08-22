@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'whatwg-fetch';
+import { act } from 'react-dom/test-utils';
 import { Currency, CurrencyList, FavouriteList } from '../src/Currency';
 
 describe('Currency', () => {
@@ -11,7 +11,9 @@ describe('Currency', () => {
         container = document.createElement('div');
     });
 
-    const render = (component) => ReactDOM.render(component, container);
+    const render = component => act(() => {
+        ReactDOM.render(component, container);
+    });
 
     it('renders the currency rate', () => {
         rate = { currency: 'dolar amerykański' };
@@ -37,15 +39,12 @@ describe('CurrencyList', () => {
 
     beforeEach(() => {
         container = document.createElement('div');
-        jest
-            .spyOn(window, 'fetch');
     });
 
-    afterEach(() => {
-        window.fetch.mockRestore();
-    });
-
-    const render = (component) => ReactDOM.render(component, container);
+    const render = (component) =>
+        act(() => {
+            ReactDOM.render(component, container);
+        });
     const element = selector => container.querySelector(selector);
     const elements = selector => container.querySelectorAll(selector);
 
@@ -63,12 +62,14 @@ describe('CurrencyList', () => {
 
     it('renders multiple currencies in an ol element', () => {
         render(<CurrencyList currencies={currencies} />, container);
+
         expect(element('ol')).not.toBeNull();
         expect(element('ol').children).toHaveLength(2);
     });
 
     it('renders each currency in an li', () => {
         render(<CurrencyList currencies={currencies} />, container);
+
         expect(elements('li')).toHaveLength(2);
         expect(elements('li')[0].textContent).toEqual('dolar amerykański');
         expect(elements('li')[1].textContent).toEqual('euro');
@@ -76,29 +77,18 @@ describe('CurrencyList', () => {
 
     it('has a button element in each li', () => {
         render(<CurrencyList currencies={currencies} />, container);
+
         expect(elements('li > button')).toHaveLength(2);
         expect(elements('li > button')[0].type).toEqual('button');
     });
 
     it('renders a button with value "Add"', () => {
-        render(<CurrencyList currencies={currencies} buttonValue={'Add'} />, container);
-        expect(elements('li > button')[0].textContent).toMatch('Add');
-    });
-
-    it('fetches data when component is mounted', () => {
         render(
-          <CurrencyList currencies={currencies} />,
+          <CurrencyList currencies={currencies} buttonValue={"Add"} />,
           container
         );
 
-        expect(window.fetch).toHaveBeenCalledWith(
-            'https://api.nbp.pl/api/exchangerates/tables/c?format=json',
-            expect.objectContaining({
-                method: 'GET',
-                credentials: 'omit',
-                headers: { 'Content-Type': 'application/json' }
-            })
-        );
+        expect(elements('li > button')[0].textContent).toMatch('Add');
     });
 });
 
@@ -119,8 +109,8 @@ describe('FavouriteList', () => {
     });
 
     it('initially nothing to show', () => {
-        render(<CurrencyList currencies={[]} />, container);
+        render(<FavouriteList currencies={[]} />, container);
 
-        expect(container.textContent).toMatch('There are no currencies yet');
+        expect(container.textContent).toMatch('');
     });
 });

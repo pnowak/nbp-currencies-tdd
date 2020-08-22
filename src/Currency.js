@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 
 export const Currency = ({ rate, buttonValue }) => (
     <>
@@ -7,34 +7,22 @@ export const Currency = ({ rate, buttonValue }) => (
     </>
 );
 
-export const CurrencyList = ({currencies, buttonValue}) => {
-    useEffect(() => {
-        const fetchAvailableCurrencies = () => {
-            window.fetch(
-               "https://api.nbp.pl/api/exchangerates/tables/c?format=json", {
-                    method: 'GET',
-                    credentials: 'omit',
-                    headers: { 'Content-Type': 'application/json'}
-                }
-            )
-        };
-
-        fetchAvailableCurrencies();
-    }, []);
-
+export const CurrencyList = ({ currencies, buttonValue }) => {
     return (
         <div id="currencyList">
             {currencies.length === 0 ? (
-                <p>There are no currencies yet.</p>
+            <p>There are no currencies yet.</p>
             ) : (
-                    <ol>
-                        {currencies.map((currency) => (
-                            <li key={currency.code}><Currency rate={currency} buttonValue={buttonValue} /></li>
-                        ))}
-                    </ol>
-                )}
+            <ol>
+                {currencies.map((currency) => (
+                <li key={currency.code}>
+                    <Currency rate={currency} buttonValue={buttonValue} />
+                </li>
+                ))}
+            </ol>
+            )}
         </div>
-    )
+    );
 };
 
 export const FavouriteList = () => <div id="favouriteList"></div>
