@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 
 export const Currency = ({ rate, buttonValue }) => (
     <>
@@ -8,6 +8,20 @@ export const Currency = ({ rate, buttonValue }) => (
 );
 
 export const CurrencyList = ({currencies, buttonValue}) => {
+    useEffect(() => {
+        const fetchAvailableCurrencies = () => {
+            window.fetch(
+               "https://api.nbp.pl/api/exchangerates/tables/c?format=json", {
+                    method: 'GET',
+                    credentials: 'omit',
+                    headers: { 'Content-Type': 'application/json'}
+                }
+            )
+        };
+
+        fetchAvailableCurrencies();
+    }, []);
+
     return (
         <div id="currencyList">
             {currencies.length === 0 ? (

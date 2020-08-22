@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'whatwg-fetch';
 import { Currency, CurrencyList, FavouriteList } from '../src/Currency';
 
 describe('Currency', () => {
@@ -36,6 +37,12 @@ describe('CurrencyList', () => {
 
     beforeEach(() => {
         container = document.createElement('div');
+        jest
+            .spyOn(window, 'fetch');
+    });
+
+    afterEach(() => {
+        window.fetch.mockRestore();
     });
 
     const render = (component) => ReactDOM.render(component, container);
@@ -76,6 +83,22 @@ describe('CurrencyList', () => {
     it('renders a button with value "Add"', () => {
         render(<CurrencyList currencies={currencies} buttonValue={'Add'} />, container);
         expect(elements('li > button')[0].textContent).toMatch('Add');
+    });
+
+    it('fetches data when component is mounted', () => {
+        render(
+          <CurrencyList currencies={currencies} />,
+          container
+        );
+
+        expect(window.fetch).toHaveBeenCalledWith(
+            'https://api.nbp.pl/api/exchangerates/tables/c?format=json',
+            expect.objectContaining({
+                method: 'GET',
+                credentials: 'omit',
+                headers: { 'Content-Type': 'application/json' }
+            })
+        );
     });
 });
 
