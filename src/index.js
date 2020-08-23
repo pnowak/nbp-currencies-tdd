@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CurrencyList } from './Currency';
+import { CurrencyLoader } from "./CurrencyLoader";
 
 ReactDOM.render(
-  <CurrencyList />,
-  document.getElementById("root")
+    <CurrencyLoader />,
+    document.getElementById("root")
 );

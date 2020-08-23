@@ -1,26 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CurrencyList } from "./Currency";
 
 export const CurrencyLoader = () => {
+    const [currencies, setCurrencies] = useState([]);
+    const [isError, setIsError] = useState(false);
+    
     useEffect(() => {
       const fetchAvailableCurrencies = async () => {
-        const response = await window.fetch(
-          "https://api.nbp.pl/api/exchangerates/tables/c?format=json",
-          {
-            method: "GET",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "http://localhost:5000",
-            },
-          }
-        );
+        try {
+          const response = await window.fetch(
+              "https://cors-anywhere.herokuapp.com/https://api.nbp.pl/api/exchangerates/tables/c?format=json",
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Access-Control-Allow-Origin': '*',
+                  'Access-Control-Allow-Headers': 'Origin, X-Requested-With'
+                },
+              }
+          );
+          const data = await response.json();
+
+          setCurrencies(data[0].rates);
+
+        } catch (error) {
+          setIsError(true);
+        }
       };
 
       fetchAvailableCurrencies();
     }, []);
 
-    return (
-        <CurrencyList currencies={[]} />
-    );
+    return <CurrencyList currencies={currencies} buttonValue='Add' />;
 }

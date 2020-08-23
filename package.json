@@ -6,8 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "serve": "dist/index.html",
-    "start": "open -n -a 'Google Chrome' --args --user-data-dir=/tmp/temp_chrome_user_data_dir http://localhost:5000/ --disable-web-security"
+    "serve": "dist"
   },
   "repository": {
     "type": "git",
