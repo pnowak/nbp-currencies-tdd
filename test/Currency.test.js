@@ -4,113 +4,113 @@ import { act } from 'react-dom/test-utils';
 import { Currency, CurrencyList, FavouriteList } from '../src/Currency';
 
 describe('Currency', () => {
-    let container;
-    let rate;
+  let container;
+  let rate;
 
-    beforeEach(() => {
-        container = document.createElement('div');
-    });
+  beforeEach(() => {
+    container = document.createElement('div');
+  });
 
-    const render = component => act(() => {
-        ReactDOM.render(component, container);
-    });
+  const render = component => act(() => {
+    ReactDOM.render(component, container);
+  });
 
-    it('renders the currency rate', () => {
-        rate = { currency: 'dolar amerykański' };
+  it('renders the currency rate', () => {
+    rate = { currency: 'dolar amerykański' };
 
-        render(<Currency rate={rate} />, container);
-        expect(container.textContent).toMatch('dolar amerykański');
-    });
+    render(<Currency rate={rate} />, container);
+    expect(container.textContent).toMatch('dolar amerykański');
+  });
 
-    it('renders another the currency value', () => {
-        rate = { currency: 'euro' };
+  it('renders another the currency value', () => {
+    rate = { currency: 'euro' };
 
-        render(<Currency rate={rate} />, container);
-        expect(container.textContent).toMatch('euro');
-    });
+    render(<Currency rate={rate} />, container);
+    expect(container.textContent).toMatch('euro');
+  });
 });
 
 describe('CurrencyList', () => {
-    const currencies = [
-        { currency: 'dolar amerykański', code: 'USD' },
-        { currency: 'euro', code: 'EUR' }
-    ];
-    let container;
+  const currencies = [
+    { currency: 'dolar amerykański', code: 'USD' },
+    { currency: 'euro', code: 'EUR' }
+  ];
+  let container;
 
-    beforeEach(() => {
-        container = document.createElement('div');
+  beforeEach(() => {
+    container = document.createElement('div');
+  });
+
+  const render = component =>
+    act(() => {
+      ReactDOM.render(component, container);
     });
+  const element = selector => container.querySelector(selector);
+  const elements = selector => container.querySelectorAll(selector);
 
-    const render = (component) =>
-        act(() => {
-            ReactDOM.render(component, container);
-        });
-    const element = selector => container.querySelector(selector);
-    const elements = selector => container.querySelectorAll(selector);
+  it('renders a div with the right id', () => {
+    render(<CurrencyList currencies={[]} />, container);
 
-    it('renders a div with the right id', () => {
-        render(<CurrencyList currencies={[]} />, container);
+    expect(element('div#currencyList')).not.toBeNull();
+  });
 
-        expect(element('div#currencyList')).not.toBeNull();
-    });
+  it('initially shows a message saying there are no currencies yet', () => {
+    render(<CurrencyList currencies={[]} />, container);
 
-    it('initially shows a message saying there are no currencies yet', () => {
-        render(<CurrencyList currencies={[]} />, container);
+    expect(container.textContent).toMatch('There are no currencies yet');
+  });
 
-        expect(container.textContent).toMatch('There are no currencies yet');
-    });
+  it('renders multiple currencies in an ol element', () => {
+    render(<CurrencyList currencies={currencies} />, container);
 
-    it('renders multiple currencies in an ol element', () => {
-        render(<CurrencyList currencies={currencies} />, container);
+    expect(element('ol')).not.toBeNull();
+    expect(element('ol').children).toHaveLength(2);
+  });
 
-        expect(element('ol')).not.toBeNull();
-        expect(element('ol').children).toHaveLength(2);
-    });
+  it('renders each currency in an li', () => {
+    render(<CurrencyList currencies={currencies} />, container);
 
-    it('renders each currency in an li', () => {
-        render(<CurrencyList currencies={currencies} />, container);
+    expect(elements('li')).toHaveLength(2);
+    expect(elements('li')[0].textContent).toEqual('dolar amerykański');
+    expect(elements('li')[1].textContent).toEqual('euro');
+  });
 
-        expect(elements('li')).toHaveLength(2);
-        expect(elements('li')[0].textContent).toEqual('dolar amerykański');
-        expect(elements('li')[1].textContent).toEqual('euro');
-    });
+  it('has a button element in each li', () => {
+    render(<CurrencyList currencies={currencies} />, container);
 
-    it('has a button element in each li', () => {
-        render(<CurrencyList currencies={currencies} />, container);
+    expect(elements('li > button')).toHaveLength(2);
+    expect(elements('li > button')[0].type).toEqual('button');
+  });
 
-        expect(elements('li > button')).toHaveLength(2);
-        expect(elements('li > button')[0].type).toEqual('button');
-    });
+  it('renders a button with value "Add"', () => {
+    render(
+      <CurrencyList currencies={currencies} buttonValue={"Add"} />,
+      container
+    );
 
-    it('renders a button with value "Add"', () => {
-        render(
-          <CurrencyList currencies={currencies} buttonValue={"Add"} />,
-          container
-        );
-
-        expect(elements('li > button')[0].textContent).toMatch('Add');
-    });
+    expect(elements('li > button')[0].textContent).toMatch('Add');
+  });
 });
 
 describe('FavouriteList', () => {
-    let container;
+  let container;
 
-    beforeEach(() => {
-        container = document.createElement('div');
-    });
+  beforeEach(() => {
+    container = document.createElement('div');
+  });
 
-    const render = (component) => ReactDOM.render(component, container);
-    const element = selector => container.querySelector(selector);
+  const render = component => ReactDOM.render(component, container);
+  const element = selector => container.querySelector(selector);
 
-    it('renders a div with the right id', () => {
-        render(<FavouriteList currencies={[]} />, container);
+  it('renders a div with the right id', () => {
+    render(<FavouriteList currencies={[]} />, container);
 
-        expect(element('div#favouriteList')).not.toBeNull();
-    });
+    expect(element('div#favouriteList')).not.toBeNull();
+  });
 
-    it('initially nothing to show', () => {
-        render(<FavouriteList currencies={[]} />, container);
+  it('initially nothing to show', () => {
+    render(<FavouriteList currencies={[]} />, container);
 
-        expect(container.textContent).toMatch('');
-    });
+    expect(container.textContent).toMatch('');
+  });
 });
