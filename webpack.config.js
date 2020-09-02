@@ -2,12 +2,26 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-    mode: "development",
-    module: {
-        rules: [{
-            test: /\.(js|jsx)$/,
-            exclude: /node-modules/,
-            loader: "babel-loader"
-        }]
-    }
+  mode: "development",
+  module: {
+    rules: [{
+      test: /\.(js|jsx)$/,
+      exclude: /node-modules/,
+      loader: "babel-loader"
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        {
+          loader: "style-loader",
+        },
+        {
+          loader: "css-loader",
+        },
+        {
+          loader: "sass-loader",
+        },
+      ],
+    },]
+  }
 }
