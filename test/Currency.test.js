@@ -54,10 +54,10 @@ describe('CurrencyList', () => {
     expect(element('div#currencyList')).not.toBeNull();
   });
 
-  it('initially shows a message saying there are no currencies yet', () => {
-    render(<CurrencyList currencies={[]} />, container);
+  it('initially shows a loading message', () => {
+    render(<CurrencyList isLoading={true} />);
 
-    expect(container.textContent).toMatch('There are no currencies yet');
+    expect(container.textContent).toMatch('Loading...');
   });
 
   it('renders multiple currencies in an ol element', () => {

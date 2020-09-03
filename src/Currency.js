@@ -1,17 +1,21 @@
 import React from 'react';
 
-export const Currency = ({ rate, buttonValue }) => (
+const Loading = () => (
+  <div>Loading...</div>
+);
+
+export const Currency = ({ buttonValue, rate }) => (
   <>
     <span>{rate.currency}</span>
     <button type="button">{buttonValue}</button>
   </>
 );
 
-export const CurrencyList = ({ currencies, buttonValue }) => {
+export const CurrencyList = ({ buttonValue, currencies, isLoading }) => {
   return (
     <div id="currencyList">
-      {currencies.length ? (
-        <p>There are no currencies yet.</p>
+      {isLoading ? (
+        <Loading />
       ) : (
         <ol>
           {currencies.map(currency => (
