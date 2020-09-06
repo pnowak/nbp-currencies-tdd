@@ -6,7 +6,7 @@ import { CurrencyLoader } from '../src/CurrencyLoader';
 import * as CurrencyListExports from '../src/Currency';
 
 describe('CurrencyLoader', () => {
-  let renderAndWait, container;
+  let container;
 
   const currencies = [{ "currency": "dolar amerykański", "code": "USD", "bid": 3.6703, "ask": 3.7445 },
     { "currency": "euro", "code": "EUR", "bid": 4.3420, "ask": 4.4298 }];
@@ -14,13 +14,18 @@ describe('CurrencyLoader', () => {
   const fetchResponseOk = body =>
     Promise.resolve(body);
 
+  const fetchResponseError = (status = 500, body = {}) =>
+    Promise.resolve({
+      ok: false,
+      status,
+      json: () => Promise.resolve(body),
+    });
+
+  const element = selector => container.querySelector(selector);
+
   beforeEach(() => {
     container = document.createElement('div');
 
-    renderAndWait = async component =>
-      await act(async () => {
-        ReactDOM.render(component, container);
-      });
     jest
       .spyOn(window, 'fetch')
       .mockReturnValue(fetchResponseOk(currencies));
@@ -33,6 +38,11 @@ describe('CurrencyLoader', () => {
     window.fetch.mockRestore();
     CurrencyListExports.CurrencyList.mockRestore();
   });
+
+  const renderAndWait = async component =>
+    await act(async () => {
+      ReactDOM.render(component, container);
+    });
 
   it.skip('fetches data when component is mounted', async () => {
     await renderAndWait(<CurrencyLoader />);
@@ -54,16 +64,34 @@ describe('CurrencyLoader', () => {
     await renderAndWait(<CurrencyLoader />);
 
     expect(CurrencyListExports.CurrencyList).toHaveBeenCalledWith(
-      { buttonValue: 'Add', currencies: [], isError: false, isLoading: true },
+      { buttonValue: "Add", currencies: [], error: false, isLoading: true },
       expect.anything()
     );
   });
 
+  it.skip('renders error message when fetch call fails', async () => {
+    window.fetch.mockReturnValue(fetchResponseError());
+
+    await renderAndWait(<CurrencyLoader error={Error} />);
+
+    expect(CurrencyListExports.CurrencyList).toHaveBeenLastCalledWith(
+      { buttonValue: "Add", currencies: [], error: true, isLoading: false },
+      expect.anything()
+    );
+
+    expect(element('.error')).not.toBeNull();
+    expect(element('.error').textContent).toMatch(
+      'error occurred'
+    );
+  });
+
   it.skip('displays currencies list that are fetched on mount', async () => {
+    window.fetch.mockReturnValue(fetchResponseOk(currencies));
+    
     await renderAndWait(<CurrencyLoader />);
 
     expect(CurrencyListExports.CurrencyList).toHaveBeenLastCalledWith(
-      { buttonValue: 'Add', currencies },
+      { buttonValue: "Add", currencies, error: false, isLoading: false },
       expect.anything()
     );
   });

@@ -1,5 +1,9 @@
 import React from 'react';
 
+const Error = () => (
+  <div className="error">An error occurred during save.</div>
+);
+
 const Loading = () => (
   <div>Loading...</div>
 );
@@ -11,9 +15,10 @@ export const Currency = ({ buttonValue, rate }) => (
   </>
 );
 
-export const CurrencyList = ({ buttonValue, currencies, isLoading }) => {
+export const CurrencyList = ({ buttonValue, currencies, error, isLoading }) => {
   return (
     <div id="currencyList">
+      {error ? <Error /> : null}
       {isLoading ? (
         <Loading />
       ) : (

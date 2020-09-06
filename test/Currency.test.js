@@ -90,6 +90,22 @@ describe('CurrencyList', () => {
 
     expect(elements('li > button')[0].textContent).toMatch('Add');
   });
+
+  it('renders error message when fetch call fails', () => {
+    render(
+      <CurrencyList
+        currencies={currencies}
+        buttonValue={"Add"}
+        error={Error}
+      />,
+      container
+    );
+
+    expect(element('.error')).not.toBeNull();
+    expect(element('.error').textContent).toMatch(
+      'error occurred'
+    );
+  });
 });
 
 describe('FavouriteList', () => {

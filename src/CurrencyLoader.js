@@ -3,7 +3,7 @@ import { CurrencyList } from "./Currency";
 
 export const CurrencyLoader = () => {
   const [currencies, setCurrencies] = useState([]);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
     
   useEffect(() => {
@@ -28,7 +28,7 @@ export const CurrencyLoader = () => {
         setCurrencies(data[0].rates);
 
       } catch (error) {
-        setIsError(true);
+        setError(true);
       }
 
       setIsLoading(false);
@@ -38,6 +38,11 @@ export const CurrencyLoader = () => {
   }, []);
 
   return (
-    <CurrencyList currencies={currencies} isError={isError} isLoading={isLoading} buttonValue="Add" />
+    <CurrencyList
+      buttonValue="Add"
+      currencies={currencies}
+      error={error}
+      isLoading={isLoading}
+    />
   );
 }
