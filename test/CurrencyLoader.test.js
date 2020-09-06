@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
 import 'whatwg-fetch';
 import { CurrencyLoader } from '../src/CurrencyLoader';
-import * as CurrencyListExports from '../src/Currency';
+import * as CurrencyAppExports from '../src/Currency';
 
 describe('CurrencyLoader', () => {
   let container;
@@ -29,14 +29,12 @@ describe('CurrencyLoader', () => {
     jest
       .spyOn(window, 'fetch')
       .mockReturnValue(fetchResponseOk(currencies));
-    jest
-      .spyOn(CurrencyListExports, 'CurrencyList')
-      .mockReturnValue(null);
+    jest.spyOn(CurrencyAppExports, 'CurrencyApp').mockReturnValue(null);
   });
 
   afterEach(() => {
     window.fetch.mockRestore();
-    CurrencyListExports.CurrencyList.mockRestore();
+    CurrencyAppExports.CurrencyApp.mockRestore();
   });
 
   const renderAndWait = async component =>
@@ -63,8 +61,8 @@ describe('CurrencyLoader', () => {
   it('initially passes no data to CurrencyList', async () => {
     await renderAndWait(<CurrencyLoader />);
 
-    expect(CurrencyListExports.CurrencyList).toHaveBeenCalledWith(
-      { buttonValue: "Add", currencies: [], error: false, isLoading: true },
+    expect(CurrencyAppExports.CurrencyApp).toHaveBeenCalledWith(
+      { currencies: [], error: false, favourites: [], isLoading: true },
       expect.anything()
     );
   });
@@ -74,8 +72,8 @@ describe('CurrencyLoader', () => {
 
     await renderAndWait(<CurrencyLoader error={Error} />);
 
-    expect(CurrencyListExports.CurrencyList).toHaveBeenLastCalledWith(
-      { buttonValue: "Add", currencies: [], error: true, isLoading: false },
+    expect(CurrencyAppExports.CurrencyApp).toHaveBeenLastCalledWith(
+      { currencies: [], error: true, favourites: [], isLoading: false },
       expect.anything()
     );
 
@@ -90,8 +88,8 @@ describe('CurrencyLoader', () => {
     
     await renderAndWait(<CurrencyLoader />);
 
-    expect(CurrencyListExports.CurrencyList).toHaveBeenLastCalledWith(
-      { buttonValue: "Add", currencies, error: false, isLoading: false },
+    expect(CurrencyAppExports.CurrencyApp).toHaveBeenLastCalledWith(
+      { currencies, error: false, favourites: [], isLoading: false },
       expect.anything()
     );
   });

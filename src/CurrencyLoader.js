@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CurrencyList } from "./Currency";
+import { CurrencyApp } from "./Currency";
 
 export const CurrencyLoader = () => {
   const [currencies, setCurrencies] = useState([]);
@@ -38,10 +38,10 @@ export const CurrencyLoader = () => {
   }, []);
 
   return (
-    <CurrencyList
-      buttonValue="Add"
+    <CurrencyApp
       currencies={currencies}
       error={error}
+      favourites={[]}
       isLoading={isLoading}
     />
   );

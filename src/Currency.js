@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Error = () => (
   <div className="error">An error occurred during save.</div>
@@ -15,23 +15,50 @@ export const Currency = ({ buttonValue, rate }) => (
   </>
 );
 
-export const CurrencyList = ({ buttonValue, currencies, error, isLoading }) => {
+export const CurrencyList = ({ buttonValue, currencies }) => {
   return (
     <div id="currencyList">
-      {error ? <Error /> : null}
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <ol>
-          {currencies.map(currency => (
-            <li key={currency.code}>
-              <Currency rate={currency} buttonValue={buttonValue} />
-            </li>
-          ))}
-        </ol>
-      )}
+      <ol>
+        {currencies.map(currency => (
+          <li key={currency.code}>
+            <Currency
+              buttonValue={buttonValue}
+              rate={currency}
+            />
+          </li>
+        ))}
+      </ol>
     </div>
   );
 };
 
-export const FavouriteList = () => <div id="favouriteList"></div>
+export const FavouriteList = ({buttonValue, favourites}) => {
+  return (
+    <div id="favouriteList">
+      <ol>
+        {favourites.length ? 
+          favourites.map(favourite => (
+            <li key={favourite.code}>
+              <Currency buttonValue={buttonValue} rate={favourite} />
+            </li>
+          )) : null}
+      </ol>
+    </div>
+  );
+};
+
+export const CurrencyApp = ({ currencies, error, favourites, isLoading }) => {
+  return (
+    <div id="currencyApp">
+      {error ? <Error /> : null}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <CurrencyList currencies={currencies} buttonValue='Add' />
+          <FavouriteList favourites={favourites} buttonValue="Remove" />
+        </>
+      )}
+    </div>
+  );
+};
