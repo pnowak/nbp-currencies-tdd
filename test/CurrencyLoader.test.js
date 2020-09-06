@@ -8,8 +8,8 @@ import * as CurrencyAppExports from '../src/Currency';
 describe('CurrencyLoader', () => {
   let container;
 
-  const currencies = [{ "currency": "dolar amerykański", "code": "USD", "bid": 3.6703, "ask": 3.7445 },
-    { "currency": "euro", "code": "EUR", "bid": 4.3420, "ask": 4.4298 }];
+  const currencies = [{ 'currency': 'dolar amerykański', 'code': 'USD', 'bid': 3.6703, 'ask': 3.7445 },
+    { 'currency': 'euro', 'code': 'EUR', 'bid': 4.3420, 'ask': 4.4298 }];
 
   const fetchResponseOk = body =>
     Promise.resolve(body);

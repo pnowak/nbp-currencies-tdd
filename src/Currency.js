@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Error = () => (
   <div className="error">An error occurred during save.</div>
@@ -56,7 +56,7 @@ export const CurrencyApp = ({ currencies, error, favourites, isLoading }) => {
       ) : (
         <>
           <CurrencyList currencies={currencies} buttonValue='Add' />
-          <FavouriteList favourites={favourites} buttonValue="Remove" />
+          <FavouriteList favourites={favourites} buttonValue='Remove' />
         </>
       )}
     </div>

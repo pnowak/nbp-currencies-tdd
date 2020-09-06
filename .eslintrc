@@ -37,6 +37,10 @@
                 "requireForBlockBody": true
             }
         ],
+        "quotes": [
+            "error",
+            "single"
+        ],
         "arrow-body-style": "off",
         "class-methods-use-this": "off",
         "comma-dangle": "off",

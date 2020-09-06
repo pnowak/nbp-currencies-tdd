@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CurrencyApp } from "./Currency";
+import { CurrencyApp } from './Currency';
 
 export const CurrencyLoader = () => {
   const [currencies, setCurrencies] = useState([]);
@@ -12,14 +12,14 @@ export const CurrencyLoader = () => {
         setIsLoading(true);
 
         const response = await window.fetch(
-          "https://cors-anywhere.herokuapp.com/https://api.nbp.pl/api/exchangerates/tables/c?format=json",
+          'https://cors-anywhere.herokuapp.com/https://api.nbp.pl/api/exchangerates/tables/c?format=json',
           {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Headers":
-                  "Origin, X-Requested-With, Content-Type, Accept",
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers':
+                  'Origin, X-Requested-With, Content-Type, Accept',
             },
           }
         );
