@@ -1,15 +1,33 @@
 import React from 'react';
-import Currency from './Currency';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Currency } from './Currency';
+import { addToFavourite } from '../actions';
 
-export const CurrencyList = ({ buttonValue, currencies, handleClick }) => {
+const mapStateToProps = (state) => {
+  const { currencies } = state;
+
+  return { currencies };
+};
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { addToFavourite },
+    dispatch
+  );
+
+export const CurrencyList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(({ currencies, addToFavourite }) => {
   return (
     <div id="currencyList">
       <ol>
         {currencies.map(currency => (
           <li key={currency.code}>
             <Currency
-              buttonValue={buttonValue}
-              handleClick={handleClick}
+              buttonValue={'Add'}
+              handleClick={addToFavourite}
               rate={currency}
             />
           </li>
@@ -17,4 +35,4 @@ export const CurrencyList = ({ buttonValue, currencies, handleClick }) => {
       </ol>
     </div>
   );
-};
+});

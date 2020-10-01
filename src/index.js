@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CurrencyLoader } from './CurrencyLoader';
+import { Provider } from 'react-redux';
+import { App } from './components/App';
+import { store } from './store';
+import { fetchAvailableCurrencies } from './actions';
+
+store.dispatch(fetchAvailableCurrencies());
 
 ReactDOM.render(
-  <CurrencyLoader />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );

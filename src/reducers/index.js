@@ -30,6 +30,15 @@ const updateCurrencies = (currencies, currency, boolean) => {
   });
 };
 
+const updateAllCurrencies = (currencies, boolean) => {
+  return currencies.map((currencyObject) => {
+    return {
+      ...currencyObject,
+      isInFauvorite: boolean,
+    };
+  });
+};
+
 export const appReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_CURRENCIES_STARTED: {
@@ -78,26 +87,14 @@ export const appReducer = (state = initialState, action) => {
       });
 
       return {
-        currencies: [...updateCurrencies(payload.currencies, payload.currency, false)],
+        currencies: [...updateCurrencies(state.currencies, payload.currency, false)],
         favourites: filterFavourites,
       };
     }
 
     case REMOVE_ALL_FROM_FAVOURITE: {
-      const { payload } = action;
-        
-      const favouritesCurrency = state.favourites.reduce((prev, next) => {
-        prev.push(next.currency);
-
-        return prev;
-      }, []);
-
-      const updatedCurrencies = favouritesCurrency.forEach((currency) => {
-        updateCurrencies(payload.currencies, currency, false);
-      })
-
       return {
-        currencies: updatedCurrencies,
+        currencies: [...updateAllCurrencies(state.currencies, false)],
         favourites: [],
       };
     }
